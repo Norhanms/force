@@ -22,6 +22,7 @@ import config from "./config"
 import { assetMiddleware } from "./lib/middleware/asset"
 import bodyParser from "body-parser"
 import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
+import { memCacheMiddleware } from "lib/middleware/memPageCache"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -100,6 +101,9 @@ function securityMiddleware(app) {
   // Add CSRF to the cookie and remove it from the page. This will allows the
   // caching on the html and is used by the Login Modal to make secure requests.
   app.use(csrfTokenMiddleware)
+
+  // app.use(bodyParser())
+  app.use(memCacheMiddleware)
 }
 
 function staticAssetMiddlewares(app) {
